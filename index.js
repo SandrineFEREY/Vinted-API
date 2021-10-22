@@ -11,9 +11,9 @@ mongoose.connect(process.env.MONGODB_URI);
 app.use(cors());
 
 cloudinary.config({
-  cloud_name: "dnsktyxha",
-  api_key: "337291149441842",
-  api_secret: "fnF3BJs3S4L7y6V6qztQFfuikZc",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 const userRoutes = require("./routes/users");
