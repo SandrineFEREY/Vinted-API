@@ -44,35 +44,39 @@ router.post("/offer/publish", async (req, res) => {
     console.log(userValide);
 
     if (userValide) {
-      const resultOfCloudinary = await cloudinary.uploader.upload(
-        req.files.picture.path
-      );
-      const offer = new Offer({
-        product_name: req.fields.title,
-        product_description: req.fields.description,
-        product_image: resultOfCloudinary,
-        product_price: req.fields.number,
-        product_details: [
-          {
-            marque: req.fields.marque,
-          },
-          {
-            taille: req.fields.taille,
-          },
-          {
-            etat: req.fields.etat,
-          },
-          {
-            couleur: req.fields.couleur,
-          },
-          {
-            emplacement: req.fields.emplacement,
-          },
-        ],
-        owner: userValide,
-      });
-      await offer.save();
-      res.json(offer);
+      if (req.files.picture.path) {
+        const resultOfCloudinary = await cloudinary.uploader.upload(
+          req.files.picture.path
+        );
+        const offer = new Offer({
+          product_name: req.fields.title,
+          product_description: req.fields.description,
+          product_image: resultOfCloudinary,
+          product_price: req.fields.number,
+          product_details: [
+            {
+              marque: req.fields.marque,
+            },
+            {
+              taille: req.fields.taille,
+            },
+            {
+              etat: req.fields.etat,
+            },
+            {
+              couleur: req.fields.couleur,
+            },
+            {
+              emplacement: req.fields.emplacement,
+            },
+          ],
+          owner: userValide,
+        });
+        await offer.save();
+        res.json(offer);
+      } else {
+        res.json({ message: "Not picture ! so not valid" });
+      }
     } else {
       res.json({ message: "User is not found !" });
     }
