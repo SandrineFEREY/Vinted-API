@@ -44,7 +44,7 @@ router.post("/offer/publish", async (req, res) => {
     console.log(userValide);
 
     if (userValide) {
-      if (req.files.picture.path) {
+      if (req.files.picture) {
         const resultOfCloudinary = await cloudinary.uploader.upload(
           req.files.picture.path
         );
